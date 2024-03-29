@@ -1,3 +1,50 @@
-body {
-    background-color: black;
+.table th, .table td {
+    vertical-align: middle;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+.circle {
+    background-color: #fff;
+    border: 1px solid #9d9b9b;
+    border-radius: 50px; 
+    cursor: pointer;
+    display: inline-block;
+    height: 20px; 
+    width: 20px; 
+    position: relative;
+}
+
+input[type="checkbox"]:checked + .circle {
+    background-color: #34f31b;
+}
+
+input[type="checkbox"]:checked + .circle::after {
+    color: #3d3d3d;
+    content: '\2713'; 
+    font-size: 14px; 
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+.profile-icon {
+    font-size: 23px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.edit-icon {
+    color: #e41c1c;
+}
+
+.trash-icon {
+    color: black;
+}
+
+.add-task-icon {
+    margin-right: 5px;
 }
