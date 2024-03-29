@@ -8,6 +8,7 @@ const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const mainRoutes = require('./routes/mainRoutes');
 const choreRoutes = require('./routes/choreRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 //create app
 const app = express();
@@ -58,6 +59,8 @@ app.use(methodOverride('_method'));
 app.use('/', mainRoutes);
 
 app.use('/chores', choreRoutes);
+
+app.use('/users', userRoutes);
 
 //error handling
 app.use((req, res, next) => {
