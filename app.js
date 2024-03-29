@@ -3,6 +3,9 @@ const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
 const mainRoutes = require('./routes/mainRoutes');
 
 //create app
@@ -30,7 +33,7 @@ app.use(session({
     secret: 'dajsdklmvsdf',
     resave: false, 
     saveUninitialized: false,
-    store: new MongoStore({mongoUrl: url}),
+    store: new MongoStore({mongoUrl: 'mongodb+srv://demo:demo123@cluster0.pxbjzad.mongodb.net/4155-finalproject?retryWrites=true&w=majority&appName=Cluster0'}),
     cookie: {maxAge: 60*60*1000}
     })
 );

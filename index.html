@@ -9,82 +9,83 @@
         <link rel="stylesheet" href="/public/css/style.css">
     </head>
     <body>
-        <div class="container">
-            <h3 class="mt-2"><i class="fa-solid fa-list me-2"></i>Chores List</h3>
-            <ul class="nav nav-tabs justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">All</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">In Progress</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Completed</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Assigned To</a>
-                </li>
-            </ul>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Task</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Team Member</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            <input type="checkbox" id="circleCheckbox">
-                            <label for="circleCheckbox" class="circle"></label>
-                        </th>
-                        <td>Vaccum</td>
-                        <td><button type="submit" name="delete-btn" class="btn btn-danger btn-sm">High priority</button></td>
-                        <td><i class="fas fa-user-circle profile-icon"></i>Sergio Joya</td>
-                        <td>03/28/24</td>
-                        <td class="actions">
-                            <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
-                            <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <input type="checkbox" id="circleCheckbox">
-                            <label for="circleCheckbox" class="circle"></label>
-                        </th>                
-                        <td>Dust</td>
-                        <td><button type="submit" name="delete-btn" class="btn btn-success btn-sm">Low priority</button></td>
-                        <td><i class="fas fa-user-circle profile-icon"></i>Matt Settle</td>
-                        <td>03/28/24</td>
-                        <td class="actions">
-                            <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
-                            <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <input type="checkbox" id="circleCheckbox">
-                            <label for="circleCheckbox" class="circle"></label>
-                        </th>                
-                        <td>Wash dishes</td>
-                        <td><button type="submit" name="delete-btn" class="btn btn-warning btn-sm text-light">Medium priority</button></td>
-                        <td><i class="fas fa-user-circle profile-icon"></i>Isaiah Jacob</td>
-                        <td>03/28/24</td>
-                        <td class="actions">
-                            <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
-                            <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="container-fluid d-flex justify-content-end"> 
-                <button type="button" class="btn btn-secondary"><i class="fa-solid fa-plus add-task-icon"></i>Add Task</button>
+        <main>
+            <div class="container">
+                <h3 class="mt-2"><i class="fa-solid fa-list me-2"></i>Chores List</h3>
+                <ul class="nav nav-tabs justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">All</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">In Progress</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Completed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Assigned To</a>
+                    </li>
+                </ul>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Task</th>
+                            <th scope="col">Priority</th>
+                            <th scope="col">Team Member</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <input type="checkbox" id="circleCheckbox">
+                                <label for="circleCheckbox" class="circle"></label>
+                            </th>
+                            <td>Vaccum</td>
+                            <td><button type="submit" name="delete-btn" class="btn btn-danger btn-sm">High priority</button></td>
+                            <td><i class="fas fa-user-circle profile-icon"></i>Sergio Joya</td>
+                            <td>03/28/24</td>
+                            <td class="actions">
+                                <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
+                                <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <input type="checkbox" id="circleCheckbox">
+                                <label for="circleCheckbox" class="circle"></label>
+                            </th>                
+                            <td>Dust</td>
+                            <td><button type="submit" name="delete-btn" class="btn btn-success btn-sm">Low priority</button></td>
+                            <td><i class="fas fa-user-circle profile-icon"></i>Matt Settle</td>
+                            <td>03/28/24</td>
+                            <td class="actions">
+                                <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
+                                <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <input type="checkbox" id="circleCheckbox">
+                                <label for="circleCheckbox" class="circle"></label>
+                            </th>                
+                            <td>Wash dishes</td>
+                            <td><button type="submit" name="delete-btn" class="btn btn-warning btn-sm text-light">Medium priority</button></td>
+                            <td><i class="fas fa-user-circle profile-icon"></i>Isaiah Jacob</td>
+                            <td>03/28/24</td>
+                            <td class="actions">
+                                <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
+                                <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="container-fluid d-flex justify-content-end"> 
+                    <button type="button" class="btn btn-secondary"><i class="fa-solid fa-plus add-task-icon"></i>Add Task</button>
+                </div>
             </div>
-        </div>
-       
+        </main>
     </body>
 </html>
