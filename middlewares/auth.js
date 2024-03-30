@@ -6,7 +6,7 @@ exports.isGuest = (req, res, next)=>{
         return next();
     } else {
         req.flash('error', 'You are logged in already!');
-        return res.redirect('/users/profile');
+        return res.redirect('/chores');
     }
 };
 
@@ -16,7 +16,7 @@ exports.isLoggedIn = (req, res, next)=>{
         return next();
     } else {
         req.flash('error', 'You must log in first!');
-        return res.redirect('/users/login');
+        return res.redirect('/');
     }
 };
 

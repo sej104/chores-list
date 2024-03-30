@@ -12,5 +12,7 @@ router.post('/', isGuest, controller.create);
 //POST /users: authenticate user's login 
 router.post('/login', isGuest, controller.login);
 
+//GET /users/logout: logout the user
+router.get('/logout', isLoggedIn, controller.logout);
 
 module.exports = router;
