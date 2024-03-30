@@ -41,7 +41,7 @@ exports.login = (req, res, next) => {
             user.comparePassword(password)
             .then(result=>{
                 if(result) {
-                    req.session.user = {id: user._id, firstName: user.firstName};
+                    req.session.user = {id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email};
                     req.flash('success', 'You have successfully logged in');
                     res.redirect('/chores');
             } else {
@@ -62,4 +62,31 @@ exports.logout = (req, res, next) => {
             res.redirect('/');
         }
     });
+};
+
+exports.getDeleteUser = (req, res) => {
+    res.render('./user/delete');
+};
+
+
+//DELETE /users/:id
+exports.delete = (req, res, next) => {
+    let id = req.params.id; 
+
+    User.findByIdAndDelete(id, {useFindAndModify: false})
+    .then(user => {
+        if (!user) {
+            req.flash('error', 'User not found');
+            return res.redirect('/');
+        }
+        req.flash('success', 'User was successfully deleted!');
+        req.session.destroy(err => {
+            if (err) {
+                return next(err);
+            } else {
+                res.redirect('/');
+            }
+        });
+    })
+    .catch(err => next(err));
 };

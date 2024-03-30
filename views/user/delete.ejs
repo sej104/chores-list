@@ -1,0 +1,6 @@
+<%- include('../partials/header.ejs')%>
+<h3 class="mt-3">Delete Account</h3>
+<form method="POST" action="/users/<%= user.id %>?_method=DELETE">
+    <button type="submit" class="btn btn-danger">Delete User</button>
+</form>
+<%- include('../partials/footer.ejs')%>

@@ -1,9 +1,9 @@
 <%- include('../partials/header.ejs')%>
-<h3 class="mt-3">Sign Up</h3>
-<form action="/users" method="POST">
+<h3 class="mt-3">Edit Account</h3>
+<form action="#" method="POST">
     <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" name="email" required>
+        <input type="email" class="form-control" id="email" name="email" required value="<%= user.email %>">
     </div>
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
@@ -11,13 +11,13 @@
     </div>
     <div class="mb-3">
         <label for="firstName" class="form-label">First Name</label>
-        <input type="text" class="form-control" id="firstName" name="firstName" required>
+        <input type="text" class="form-control" id="firstName" name="firstName" required value="<%= user.firstName %>">
     </div>
     <div class="mb-3">
         <label for="lastName" class="form-label">Last Name</label>
-        <input type="text" class="form-control" id="lastName" name="lastName" required>
+        <input type="text" class="form-control" id="lastName" name="lastName" required value="<%= user.lastName %>">
     </div>
     <p>Already have an account? <a href="/">Login</a></p>
-    <button type="submit" class="btn btn-primary" value="Sign Up">Sign Up</button>
+    <button type="submit" class="btn btn-primary" value="Edit Account">Edit Account</button>
 </form>
 <%- include('../partials/footer.ejs')%>

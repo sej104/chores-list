@@ -49,6 +49,6 @@ input[type="checkbox"]:checked + .circle::after {
     margin-right: 5px;
 }
 
-#addTaskBtn {
+buttons {
     cursor: pointer;
 }
