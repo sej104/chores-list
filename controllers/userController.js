@@ -24,3 +24,32 @@ exports.create = (req, res, next) => {
         next(err);
     });
 };
+
+exports.login = (req, res, next) => {
+    //authenticate user's login request
+    let email = req.body.email;
+    let password = req.body.password;
+
+    //get the user that matches the email
+    User.findOne({email: email})
+    .then(user=>{
+        if (!user) {
+            console.log('wrong email address');
+            req.flash('error', 'Incorrect email address!');  
+            res.redirect('/');
+            } else {
+            user.comparePassword(password)
+            .then(result=>{
+                if(result) {
+                    req.session.user = {id: user._id, firstName: user.firstName};
+                    req.flash('success', 'You have successfully logged in');
+                    res.redirect('/chores');
+            } else {
+                req.flash('error', 'Incorrect password!');      
+                res.redirect('/');
+            }
+            });     
+        } 
+    })
+    .catch(err=>next(err));
+};

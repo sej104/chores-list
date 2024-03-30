@@ -1,4 +1,4 @@
 //GET /: send home page to the user
 exports.index = (req, res) => {
-    res.render('index');
+    res.render('./chore/index');
 };
