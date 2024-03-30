@@ -48,3 +48,7 @@ input[type="checkbox"]:checked + .circle::after {
 .add-task-icon {
     margin-right: 5px;
 }
+
+#addTaskBtn {
+    cursor: pointer;
+}

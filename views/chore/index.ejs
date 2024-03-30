@@ -71,6 +71,12 @@
         </tbody>
     </table>
     <div class="container-fluid d-flex justify-content-end"> 
-        <button type="button" class="btn btn-secondary"><i class="fa-solid fa-plus add-task-icon"></i>Add Task</button>
+        <button type="button" class="btn btn-secondary" id="addTaskBtn"><i class="fa-solid fa-plus add-task-icon"></i>Add Task</button>
     </div>
+
+    <div id="alertBox" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+        <strong>Success!</strong> Your task has been added.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
 <%- include('../partials/footer.ejs')%>
