@@ -6,15 +6,46 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Add Task</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Modal body text goes here.</p>
+                    <form id="taskForm">
+                        <div class="mb-3">
+                            <label for="task-title" class="form-label">Task Title</label>
+                            <input type="text" class="form-control" id="task-title" name="task-title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="assign-select" class="form-label">Assign To</label>
+                            <select class="form-select" aria-label="Default select example" id="assign-select" name="assign-select">
+                                <option selected>None</option>
+                                <option value="1">Sergio Joya</option>
+                                <option value="2">Matt Settle</option>
+                                <option value="3">Yuanjie Zhang</option>
+                                <option value="4">Brian Ramirez</option>
+                                <option value="5">Isaiah Jacob</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col">
+                                <label for="priority-select" class="form-label">Priority</label>
+                                <select class="form-select" aria-label="Default select example" id="priority-select" name="priority-select">
+                                    <option selected>None</option>
+                                    <option value="1">Low</option>
+                                    <option value="2">Medium</option>
+                                    <option value="3">High</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" id="date" name="date" class="form-select" required>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" form="taskForm">Submit</button>
                 </div>
             </div>
         </div>
@@ -97,8 +128,8 @@
     <%- include('../partials/footer.ejs')%>
     
     <script> 
-        let modal = new bootstrap.Modal(document.getElementById('addTask')); 
-        function showModal() { 
-            modal.show(); 
-        } 
+    let modal = new bootstrap.Modal(document.getElementById('addTask')); 
+    function showModal() { 
+        modal.show(); 
+    }
     </script>
