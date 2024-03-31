@@ -1,5 +1,26 @@
 <%- include('../partials/header.ejs')%>
-    <h3 class="mt-2"><i class="fa-solid fa-list me-2"></i>Chores List</h3>
+<div class="container-fluid d-flex justify-content-between align-items-center mt-3"> 
+    <h3><i class="fa-solid fa-list me-2"></i>Chores List</h3>
+    <button class="btn btn-primary" onclick="showModal()" id="addTaskBtn"><i class="fa-solid fa-plus add-task-icon"></i>Add Task</button>
+
+    <div id="addTask" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <ul class="nav nav-tabs justify-content-center">
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">All</a>
@@ -20,7 +41,8 @@
                 <th scope="col"></th>
                 <th scope="col">Task</th>
                 <th scope="col">Priority</th>
-                <th scope="col">Team Member</th>
+                <th scope="col">Assinged By</th>
+                <th scope="col">Assinged To</th>
                 <th scope="col">Date</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -34,6 +56,7 @@
                 <td>Vaccum</td>
                 <td><button type="submit" name="delete-btn" class="btn btn-danger btn-sm">High priority</button></td>
                 <td><i class="fas fa-user-circle profile-icon"></i>Sergio Joya</td>
+                <td></td>
                 <td>03/28/24</td>
                 <td class="actions">
                     <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
@@ -47,6 +70,7 @@
                 </th>                
                 <td>Dust</td>
                 <td><button type="submit" name="delete-btn" class="btn btn-success btn-sm">Low priority</button></td>
+                <td></td>
                 <td><i class="fas fa-user-circle profile-icon"></i>Matt Settle</td>
                 <td>03/28/24</td>
                 <td class="actions">
@@ -62,6 +86,7 @@
                 <td>Wash dishes</td>
                 <td><button type="submit" name="delete-btn" class="btn btn-warning btn-sm text-light">Medium priority</button></td>
                 <td><i class="fas fa-user-circle profile-icon"></i>Isaiah Jacob</td>
+                <td></td>
                 <td>03/28/24</td>
                 <td class="actions">
                     <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
@@ -69,14 +94,12 @@
                 </td>
             </tr>
         </tbody>
-    </table>
-    <div class="container-fluid d-flex justify-content-end"> 
-        <button type="button" class="btn btn-secondary" id="addTaskBtn"><i class="fa-solid fa-plus add-task-icon"></i>Add Task</button>
-    </div>
-
-    <div id="alertBox" class="alert alert-success alert-dismissible fade show d-none" role="alert">
-        <strong>Success!</strong> Your task has been added.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-<%- include('../partials/footer.ejs')%>
+    </table>   
+    <%- include('../partials/footer.ejs')%>
+    
+    <script> 
+        let modal = new bootstrap.Modal(document.getElementById('addTask')); 
+        function showModal() { 
+            modal.show(); 
+        } 
+    </script>

@@ -38,17 +38,36 @@ input[type="checkbox"]:checked + .circle::after {
 }
 
 .edit-icon {
-    color: #e41c1c;
+    color: rgb(37, 175, 37);
 }
 
 .trash-icon {
-    color: black;
+    color: red;
 }
 
 .add-task-icon {
     margin-right: 5px;
 }
 
-buttons {
+button {
     cursor: pointer;
+}
+
+/*Flash message styles*/
+.success {
+    background: rgba(108, 192, 112, 0.7);
+    color: #fff;
+    width: 30%;
+    margin: 0 auto 1rem auto;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+.error {
+    background: rgba(255, 102, 51, 0.7);
+    color: #fff;
+    width: 70%;
+    margin: 0 auto 1rem auto;
+    text-align: center;
+    padding: 0.5rem 0;
 }
