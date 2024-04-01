@@ -10,26 +10,24 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="taskForm">
+                    <form action="/chores" enctype="multipart/form-data" method="POST" id="taskForm">
                         <div class="mb-3">
-                            <label for="task-title" class="form-label">Task Title</label>
-                            <input type="text" class="form-control" id="task-title" name="task-title" required>
+                            <label for="title" class="form-label">Task Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
                         </div>
                         <div class="mb-3">
-                            <label for="assign-select" class="form-label">Assign To</label>
-                            <select class="form-select" aria-label="Default select example" id="assign-select" name="assign-select">
+                            <label for="assignTo" class="form-label">Assign To</label>
+                            <select class="form-select" aria-label="Default select example" id="assignTo" name="assignTo">
                                 <option selected>None</option>
-                                <option value="1">Sergio Joya</option>
-                                <option value="2">Matt Settle</option>
-                                <option value="3">Yuanjie Zhang</option>
-                                <option value="4">Brian Ramirez</option>
-                                <option value="5">Isaiah Jacob</option>
+                                <% users.filter(user => user.id !== req.session.user.id ).forEach(function(user) { %>
+                                    <option value="<%= user.id %>"><%= user.firstName + ' ' + user.lastName %></option>
+                                <% }); %>
                             </select>
                         </div>
                         <div class="mb-3 row">
                             <div class="col">
-                                <label for="priority-select" class="form-label">Priority</label>
-                                <select class="form-select" aria-label="Default select example" id="priority-select" name="priority-select">
+                                <label for="priority" class="form-label">Priority</label>
+                                <select class="form-select" aria-label="Default select example" id="priority" name="priority">
                                     <option selected>None</option>
                                     <option value="1">Low</option>
                                     <option value="2">Medium</option>

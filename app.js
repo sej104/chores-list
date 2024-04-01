@@ -57,10 +57,8 @@ app.use(methodOverride('_method'));
 
 //set up routes
 app.use('/', mainRoutes);
-
-app.use('/chores', choreRoutes);
-
 app.use('/users', userRoutes);
+app.use('/chores', choreRoutes);
 
 //error handling
 app.use((req, res, next) => {
