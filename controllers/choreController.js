@@ -15,8 +15,7 @@ exports.index = (req, res) => {
 //POST /chores
 exports.create = (req, res, next) => {
     let chore = new Chore(req.body);
-    chore.host = req.session.user.id;
-    console.log(chore);
+    chore.createdBy = req.session.user.id;
     chore.save()
     .then(()=>{
         req.flash('success', 'Chore was succesfully created!');
@@ -24,9 +23,10 @@ exports.create = (req, res, next) => {
     })
     .catch(err=>{
         if(err.name === 'ValidationError') {
+            console.log(err);
             err.status = 400;
             req.flash('error', err.message);
-            return res.redirect('/chores');
+            return res.redirect('/sdasdasd');
         }
         next(err)
     });

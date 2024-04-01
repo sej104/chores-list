@@ -10,14 +10,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/chores" enctype="multipart/form-data" method="POST" id="taskForm">
+                    <form action="/chores" method="POST" id="taskForm">
                         <div class="mb-3">
                             <label for="title" class="form-label">Task Title</label>
                             <input type="text" class="form-control" id="title" name="title" required>
                         </div>
                         <div class="mb-3">
                             <label for="assignTo" class="form-label">Assign To</label>
-                            <select class="form-select" aria-label="Default select example" id="assignTo" name="assignTo">
+                            <select class="form-select" id="assignTo" name="assignTo">
                                 <option selected>None</option>
                                 <% users.filter(user => user.id !== req.session.user.id ).forEach(function(user) { %>
                                     <option value="<%= user.id %>"><%= user.firstName + ' ' + user.lastName %></option>
@@ -27,11 +27,11 @@
                         <div class="mb-3 row">
                             <div class="col">
                                 <label for="priority" class="form-label">Priority</label>
-                                <select class="form-select" aria-label="Default select example" id="priority" name="priority">
+                                <select class="form-select" id="priority" name="priority">
                                     <option selected>None</option>
-                                    <option value="1">Low</option>
-                                    <option value="2">Medium</option>
-                                    <option value="3">High</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
                                 </select>
                             </div>
                             <div class="col">
@@ -43,91 +43,92 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" form="taskForm">Submit</button>
+                    <button type="submit" class="btn btn-primary" form="taskForm" id="submitBtn">Submit</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-    <ul class="nav nav-tabs justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">All</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">In Progress</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Completed</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Assigned To</a>
-        </li>
-    </ul>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">Task</th>
-                <th scope="col">Priority</th>
-                <th scope="col">Assinged By</th>
-                <th scope="col">Assinged To</th>
-                <th scope="col">Date</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">
-                    <input type="checkbox" id="circleCheckbox">
-                    <label for="circleCheckbox" class="circle"></label>
-                </th>
-                <td>Vaccum</td>
-                <td><button type="submit" name="delete-btn" class="btn btn-danger btn-sm">High priority</button></td>
-                <td><i class="fas fa-user-circle profile-icon"></i>Sergio Joya</td>
-                <td></td>
-                <td>03/28/24</td>
-                <td class="actions">
-                    <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
-                    <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">
-                    <input type="checkbox" id="circleCheckbox">
-                    <label for="circleCheckbox" class="circle"></label>
-                </th>                
-                <td>Dust</td>
-                <td><button type="submit" name="delete-btn" class="btn btn-success btn-sm">Low priority</button></td>
-                <td></td>
-                <td><i class="fas fa-user-circle profile-icon"></i>Matt Settle</td>
-                <td>03/28/24</td>
-                <td class="actions">
-                    <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
-                    <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">
-                    <input type="checkbox" id="circleCheckbox">
-                    <label for="circleCheckbox" class="circle"></label>
-                </th>                
-                <td>Wash dishes</td>
-                <td><button type="submit" name="delete-btn" class="btn btn-warning btn-sm text-light">Medium priority</button></td>
-                <td><i class="fas fa-user-circle profile-icon"></i>Isaiah Jacob</td>
-                <td></td>
-                <td>03/28/24</td>
-                <td class="actions">
-                    <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
-                    <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>   
-    <%- include('../partials/footer.ejs')%>
+<ul class="nav nav-tabs justify-content-center">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">All</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">In Progress</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Completed</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Assigned To</a>
+    </li>
+</ul>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Task</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Assinged By</th>
+            <th scope="col">Assinged To</th>
+            <th scope="col">Date</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">
+                <input type="checkbox" id="circleCheckbox">
+                <label for="circleCheckbox" class="circle"></label>
+            </th>
+            <td>Vaccum</td>
+            <td><button type="submit" name="delete-btn" class="btn btn-danger btn-sm">High priority</button></td>
+            <td><i class="fas fa-user-circle profile-icon"></i>Sergio Joya</td>
+            <td></td>
+            <td>03/28/24</td>
+            <td class="actions">
+                <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
+                <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <input type="checkbox" id="circleCheckbox">
+                <label for="circleCheckbox" class="circle"></label>
+            </th>                
+            <td>Dust</td>
+            <td><button type="submit" name="delete-btn" class="btn btn-success btn-sm">Low priority</button></td>
+            <td></td>
+            <td><i class="fas fa-user-circle profile-icon"></i>Matt Settle</td>
+            <td>03/28/24</td>
+            <td class="actions">
+                <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
+                <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <input type="checkbox" id="circleCheckbox">
+                <label for="circleCheckbox" class="circle"></label>
+            </th>                
+            <td>Wash dishes</td>
+            <td><button type="submit" name="delete-btn" class="btn btn-warning btn-sm text-light">Medium priority</button></td>
+            <td><i class="fas fa-user-circle profile-icon"></i>Isaiah Jacob</td>
+            <td></td>
+            <td>03/28/24</td>
+            <td class="actions">
+                <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
+                <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>   
+<%- include('../partials/footer.ejs')%>
     
-    <script> 
-    let modal = new bootstrap.Modal(document.getElementById('addTask')); 
-    function showModal() { 
-        modal.show(); 
-    }
-    </script>
+<script> 
+let modal = new bootstrap.Modal(document.getElementById('addTask')); 
+function showModal() { 
+    modal.show(); 
+}
+</script>
+
