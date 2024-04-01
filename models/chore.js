@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const choreSchema = new Schema({
     title: {type: String, required: [true, 'title is required']},
-    assignTo: {type: Schema.Types.ObjectId, ref: 'User'},
+    assignTo: {type: Schema.Types.ObjectId, ref: 'User', required: false},
     priority: {type: String,
         required: [true, 'category is required'],
         enum: ['None', 'Low', 'Medium', 'High']},

@@ -14,6 +14,9 @@ exports.index = (req, res) => {
 
 //POST /chores
 exports.create = (req, res, next) => {
+    if (req.body.assignTo === "") {
+        req.body.assignTo = null;
+    }
     let chore = new Chore(req.body);
     chore.createdBy = req.session.user.id;
     chore.save()
