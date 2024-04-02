@@ -42,3 +42,15 @@ exports.create = (req, res, next) => {
         next(err)
     });
 };
+
+//DELETE /chores/:id
+exports.delete = (req, res, next) => {
+    let id = req.params.id;
+
+    Chore.findByIdAndDelete(id, {useFindAndModify: false})
+    .then(chore => {
+        req.flash('success', 'Chore was succesfully deleted!');
+        return res.redirect('/chores');
+    })
+    .catch(err => next(err));
+};
