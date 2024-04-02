@@ -12,5 +12,7 @@ router.post('/', isLoggedIn, controller.create);
 //DELETE /chores/:id delete the chore identified by id
 router.delete('/:id', isLoggedIn, controller.delete);
 
+//PUT /chore/:id update the chore identified by id
+router.put('/:id', isLoggedIn, controller.update);
 
 module.exports = router;

@@ -54,3 +54,23 @@ exports.delete = (req, res, next) => {
     })
     .catch(err => next(err));
 };
+
+//PUT /events/:id
+exports.update = (req, res, next) => {
+    let chore = req.body;
+    let id = req.params.id;
+
+    Chore.findByIdAndUpdate(id, chore, {useFindAndModify: false, runValidators: true})
+    .then(chore=>{
+        req.flash('success', 'Chore was updated succesfully!');
+        res.redirect('/chores');
+    })
+    .catch(err=>{
+        if(err.name === 'ValidationError') {
+            err.status = 400;            
+            req.flash('error', err.message);
+            res.redirect('back');
+        }
+        // next(err);
+    });
+};
