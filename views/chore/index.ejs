@@ -63,66 +63,54 @@
         <a class="nav-link" href="#">Assigned To</a>
     </li>
 </ul>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">Task</th>
-            <th scope="col">Priority</th>
-            <th scope="col">Assinged By</th>
-            <th scope="col">Assinged To</th>
-            <th scope="col">Date</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">
-                <input type="checkbox" id="circleCheckbox">
-                <label for="circleCheckbox" class="circle"></label>
-            </th>
-            <td>Vaccum</td>
-            <td><button type="submit" name="delete-btn" class="btn btn-danger btn-sm">High priority</button></td>
-            <td><i class="fas fa-user-circle profile-icon"></i>Sergio Joya</td>
-            <td></td>
-            <td>03/28/24</td>
-            <td class="actions">
-                <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
-                <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">
-                <input type="checkbox" id="circleCheckbox">
-                <label for="circleCheckbox" class="circle"></label>
-            </th>                
-            <td>Dust</td>
-            <td><button type="submit" name="delete-btn" class="btn btn-success btn-sm">Low priority</button></td>
-            <td></td>
-            <td><i class="fas fa-user-circle profile-icon"></i>Matt Settle</td>
-            <td>03/28/24</td>
-            <td class="actions">
-                <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
-                <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">
-                <input type="checkbox" id="circleCheckbox">
-                <label for="circleCheckbox" class="circle"></label>
-            </th>                
-            <td>Wash dishes</td>
-            <td><button type="submit" name="delete-btn" class="btn btn-warning btn-sm text-light">Medium priority</button></td>
-            <td><i class="fas fa-user-circle profile-icon"></i>Isaiah Jacob</td>
-            <td></td>
-            <td>03/28/24</td>
-            <td class="actions">
-                <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
-                <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
-            </td>
-        </tr>
-    </tbody>
-</table>   
+
+<% if (chores.length) { %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Task</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Assinged By</th>
+                <th scope="col">Assinged To</th>
+                <th scope="col">Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% chores.forEach(chore => { %>
+                <tr>
+                    <th scope="row">
+                        <input type="checkbox" id="completeCheckBox_<%= chore._id %>">
+                        <label for="completeCheckBox_<%= chore._id %>" class="circle"></label>
+                    </th>
+                    <td><%= chore.title %></td>
+                    <% if (chore.priority !== 'None') { %>
+                        <% const priorityButtonClasses = {
+                            'Low': 'btn-success',
+                            'Medium': 'btn-warning text-light',
+                            'High': 'btn-danger'
+                        }; %>
+                        <td><button name="delete-btn" class="btn <%= priorityButtonClasses[chore.priority] %> btn-sm"><%= chore.priority %> priority</button></td>
+                    <% } else { %>
+                        <td></td>
+                    <% } %>
+                    <td><i class="fas fa-user-circle profile-icon"></i><%= chore.createdBy.firstName + ' ' + chore.createdBy.lastName %></td>
+                    <% if (chore.assignTo) { %>
+                        <td><i class="fas fa-user-circle profile-icon"></i><%= chore.assignTo.firstName + ' ' + chore.assignTo.lastName %></td>
+                    <% } else { %>
+                        <td></td>
+                    <% } %>
+                    <td><%= chore.formattedDate %></td>
+                    <td class="actions">
+                        <button type="button" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
+                        <button type="button" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
+                    </td>
+                </tr>
+            <% }); %>                        
+        </tbody>
+    </table>
+<% } %>
 <%- include('../partials/footer.ejs')%>
     
 <script> 

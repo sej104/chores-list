@@ -4,9 +4,17 @@ const User = require('../models/user');
 
 //GET /: send home page to the user
 exports.index = (req, res) => {
-    User.find()
-    .then(users=>{
-        res.render('./chore/index', {users, req});
+    Promise.all([
+        User.find(),
+        Chore.find()
+        .populate('createdBy', 'firstName lastName')
+        .populate('assignTo', 'firstName lastName')
+    ])
+    .then(([users, chores]) => {
+        chores.forEach(chore => {
+            chore.formattedDate = DateTime.fromJSDate(chore.date).toFormat('MM/dd/yy');
+        });
+        res.render('./chore/index', {req, users, chores});
     })
     .catch(err=>next(err));
 };
