@@ -1,0 +1,188 @@
+<%- include('../partials/header.ejs')%>
+    <div class="container-fluid d-flex justify-content-between align-items-center mt-3"> 
+        <h3><i class="fa-solid fa-list me-2"></i>Chores List</h3>
+        <button class="btn btn-primary" onclick="showNewTaskModal()" id="addTaskBtn"><i class="fa-solid fa-plus add-task-icon"></i>Add Task</button>
+        <div id="addTask" class="modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Task</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/chores" method="POST" id="newTaskForm">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Task Title</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="assignTo" class="form-label">Assign To</label>
+                                <select class="form-select" id="assignTo" name="assignTo">
+                                    <option selected value="">None</option>
+                                    <% users.filter(user => user.id !== req.session.user.id ).forEach(function(user) { %>
+                                        <option value="<%= user.id %>"><%= user.firstName + ' ' + user.lastName %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col">
+                                    <label for="priority" class="form-label">Priority</label>
+                                    <select class="form-select" id="priority" name="priority">
+                                        <option selected value="None">None</option>
+                                        <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="date" class="form-label">Date</label>
+                                    <input type="date" id="date" name="date" class="form-select" required>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" form="newTaskForm" id="submitBtn">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">All</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/chores/active">In Progress</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/chores/assigned">Assigned To</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/chores/completed">Completed</a>
+        </li>
+    </ul>
+<% if (chores.length) { %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Task</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Assinged By</th>
+                <th scope="col">Assinged To</th>
+                <th scope="col">Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% chores.forEach(chore => { %>
+                <tr>
+                    <th scope="row">
+                        <form method="POST" action="/chores/<%= chore.id %>?_method=PUT">
+                            <input type="hidden" name="completed" value="<%= !chore.completed %>">
+                            <input type="checkbox" id="completeCheckBox_<%= chore.id %>" onchange="this.form.submit()" <% if (chore.completed) { %>checked<% } %>>
+                            <label for="completeCheckBox_<%= chore.id %>" class="circle"></label>
+                        </form>
+                    </th>
+                    <td><%= chore.title %></td>
+                    <% if (chore.priority !== 'None') { %>
+                        <% const priorityButtonClasses = {
+                            'Low': 'btn-success',
+                            'Medium': 'btn-warning text-light',
+                            'High': 'btn-danger'
+                        }; %>
+                        <td><button name="delete-btn" class="btn <%= priorityButtonClasses[chore.priority] %> btn-sm"><%= chore.priority %> priority</button></td>
+                    <% } else { %>
+                        <td></td>
+                    <% } %>
+                    <td><i class="fas fa-user-circle profile-icon"></i><%= chore.createdBy.firstName + ' ' + chore.createdBy.lastName %></td>
+                    <% if (chore.assignTo) { %>
+                        <td><i class="fas fa-user-circle profile-icon"></i><%= chore.assignTo.firstName + ' ' + chore.assignTo.lastName %></td>
+                    <% } else { %>
+                        <td></td>
+                    <% } %>
+                    <td><%= chore.formattedDate%></td>
+                    <td>
+                        <% if (chore.createdBy._id.toString() === user.id) { %>
+                        <button type="button" onclick="showEditTaskModal('<%= chore.id %>')" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
+                        <div id="editTask_<%= chore.id %>" class="modal" tabindex="-1">                            
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Edit Task</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="/chores/<%= chore.id%>?_method=PUT" id="editTaskForm">
+                                            <div class="mb-3">
+                                                <label for="title" class="form-label">Task Title</label>
+                                                <input type="text" class="form-control" id="title" name="title" required value="<%= chore.title %>">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="assignTo" class="form-label">Assign To</label>
+                                                <select class="form-select" id="assignTo" name="assignTo">
+                                                    <option value="" <% if (!chore.assignTo) { %>selected<% } %>>None</option>
+                                                    <% users.filter(user => user.id !== req.session.user.id ).forEach(function(user) { %>
+                                                        <option value="<%= user.id %>" <% if (chore.assignTo && chore.assignTo.id === user.id) { %>selected<% } %>><%= user.firstName + ' ' + user.lastName %></option>
+                                                    <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <div class="col">
+                                                    <label for="priority" class="form-label">Priority</label>
+                                                    <select class="form-select" id="priority" name="priority">
+                                                        <option value="None" <% if (chore.priority === 'None') { %>selected<% } %>>None</option>
+                                                        <option value="Low" <% if (chore.priority === 'Low') { %>selected<% } %>>Low</option>
+                                                        <option value="Medium" <% if (chore.priority === 'Medium') { %>selected<% } %>>Medium</option>
+                                                        <option value="High" <% if (chore.priority === 'High') { %>selected<% } %>>High</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="date" class="form-label">Date</label>
+                                                    <input type="date" id="date" name="date" class="form-select" required value="<%= formatDate(chore.date) %>">                                                </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-primary" form="editTaskForm" id="submitBtn">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <form>
+                            <button type="submit" formmethod="POST" formaction = "/chores/<%= chore.id%>?_method=DELETE" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>                        
+        </tbody>
+    </table>
+<% } %>
+<% function formatDate(isoDate) {
+    const date = new Date(isoDate);
+    date.setDate(date.getDate() + 1); // Add one day
+    const year = date.getFullYear();
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+} %>
+
+<%- include('../partials/footer.ejs')%>
+<script> 
+let newTaskModal = new bootstrap.Modal(document.getElementById('addTask')); 
+function showNewTaskModal() { 
+    newTaskModal.show(); 
+}
+
+function showEditTaskModal(taskId) {
+    let editTaskModal = new bootstrap.Modal(document.getElementById('editTask_' + taskId));
+    editTaskModal.show();
+}
+</script>
+
+

@@ -74,7 +74,7 @@ exports.completed = (req, res, next) => {
 
     Promise.all([
         User.find(),
-        Chore.find({ $or: [{ createdBy: userId }, { assignTo: userId }] })
+        Chore.find({ $or: [{ createdBy: userId }, { assignTo: userId }], completed: true })
         .populate('createdBy', 'firstName lastName')
         .populate('assignTo', 'firstName lastName')
     ])
