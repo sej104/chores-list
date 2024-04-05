@@ -11,6 +11,7 @@ exports.index = (req, res, next) => {
         Chore.find({ $or: [{ createdBy: userId }, { assignTo: userId }] })
         .populate('createdBy', 'firstName lastName')
         .populate('assignTo', 'firstName lastName')
+        .sort({ date: 1 })
     ])
     .then(([users, chores]) => {
         chores.forEach(chore => {
@@ -35,6 +36,7 @@ exports.active = (req, res, next) => {
         })
         .populate('createdBy', 'firstName lastName')
         .populate('assignTo', 'firstName lastName')
+        .sort({ date: 1 })
     ])
     .then(([users, chores]) => {
         chores.forEach(chore => {
@@ -58,6 +60,7 @@ exports.assigned = (req, res, next) => {
         })
         .populate('createdBy', 'firstName lastName')
         .populate('assignTo', 'firstName lastName')
+        .sort({ date: 1 })
     ])
     .then(([users, chores]) => {
         chores.forEach(chore => {
@@ -77,6 +80,7 @@ exports.completed = (req, res, next) => {
         Chore.find({ $or: [{ createdBy: userId }, { assignTo: userId }], completed: true })
         .populate('createdBy', 'firstName lastName')
         .populate('assignTo', 'firstName lastName')
+        .sort({ date: 1 })
     ])
     .then(([users, chores]) => {
         chores.forEach(chore => {
