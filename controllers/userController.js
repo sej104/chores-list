@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Chore = require('../models/chore');
 
 //GET /: send home page to the user
 exports.new = (req, res) => {
@@ -74,11 +75,12 @@ exports.delete = (req, res, next) => {
     let id = req.params.id; 
 
     User.findByIdAndDelete(id, {useFindAndModify: false})
-    .then(user => {
+    .then( user => {
         if (!user) {
             req.flash('error', 'User not found');
             return res.redirect('/');
         }
+
         req.flash('success', 'User was successfully deleted!');
         req.session.destroy(err => {
             if (err) {

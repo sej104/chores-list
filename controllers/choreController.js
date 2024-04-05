@@ -45,6 +45,9 @@ exports.create = (req, res, next) => {
 
 //PUT /events/:id
 exports.update = (req, res, next) => {
+    if (req.body.assignTo === "") {
+        req.body.assignTo = null;
+    }
     let chore = req.body;
     let id = req.params.id;
 
