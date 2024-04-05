@@ -51,13 +51,13 @@
     </div>
     <ul class="nav nav-tabs justify-content-center">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">All</a>
+            <a class="nav-link" aria-current="page" href="/">All</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/chores/active">In Progress</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/chores/assigned">Assigned To</a>
+            <a class="nav-link active" href="/chores/assigned">Assigned To</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/chores/completed">Completed</a>
@@ -70,7 +70,6 @@
                 <th scope="col"></th>
                 <th scope="col">Task</th>
                 <th scope="col">Priority</th>
-                <th scope="col">Assinged By</th>
                 <th scope="col">Assinged To</th>
                 <th scope="col">Date</th>
                 <th scope="col">Actions</th>
@@ -105,7 +104,6 @@
                     <% } %>
                     <td><%= chore.formattedDate%></td>
                     <td>
-                        <% if (chore.createdBy._id.toString() === user.id) { %>
                         <button type="button" onclick="showEditTaskModal('<%= chore.id %>')" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
                         <div id="editTask_<%= chore.id %>" class="modal" tabindex="-1">                            
                             <div class="modal-dialog modal-dialog-centered">
@@ -153,7 +151,6 @@
                                 </div>
                             </div>
                         </div>
-                        <% } %>
                         <form>
                             <button type="submit" formmethod="POST" formaction = "/chores/<%= chore.id%>?_method=DELETE" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
                         </form>

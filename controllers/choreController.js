@@ -2,7 +2,7 @@ const { DateTime } = require('luxon');
 const Chore = require('../models/chore'); 
 const User = require('../models/user'); 
 
-//GET /: send home page to the user
+//GET /: send all tasks to user
 exports.index = (req, res, next) => {
     let userId = req.session.user.id;
 
@@ -17,6 +17,31 @@ exports.index = (req, res, next) => {
             chore.formattedDate = DateTime.fromJSDate(chore.date).plus({ days: 1 }).toFormat('MM/dd/yy');
         });
         res.render('./chore/index', { req, users, chores });
+    })
+    .catch(err=>next(err));
+};
+
+//GET /active: send tasks in progess
+exports.active = (req, res, next) => {
+    let userId = req.session.user.id;
+
+    Promise.all([
+        User.find(),
+        Chore.find({
+            $or: [
+                { createdBy: userId, assignTo: null, completed: false }, // Fetch tasks created by the current user and not assigned to anyone else
+                { assignTo: userId, completed: false } // Fetch tasks assigned to the current user by someone else
+            ]
+        })
+        .populate('createdBy', 'firstName lastName')
+        .populate('assignTo', 'firstName lastName')
+
+    ])
+    .then(([users, chores]) => {
+        chores.forEach(chore => {
+            chore.formattedDate = DateTime.fromJSDate(chore.date).plus({ days: 1 }).toFormat('MM/dd/yy');
+        });
+        res.render('./chore/active', { req, users, chores });
     })
     .catch(err=>next(err));
 };
@@ -55,7 +80,7 @@ exports.update = (req, res, next) => {
     Chore.findByIdAndUpdate(id, chore, {useFindAndModify: false, runValidators: true})
     .then(chore=>{
         req.flash('success', 'Chore was updated succesfully!');
-        res.redirect('/chores');
+        res.redirect('back');
     })
     .catch(err=>{
         if(err.name === 'ValidationError') {
@@ -77,4 +102,24 @@ exports.delete = (req, res, next) => {
         return res.redirect('/chores');
     })
     .catch(err => next(err));
+};
+
+
+
+//GET /: send tasks assigned to other users
+exports.assigned = (req, res, next) => {
+    let userId = req.session.user.id;
+
+    Promise.all([
+        User.find(),
+        Chore.find({ assignTo: { $ne: userId } })
+        .populate('assignTo', 'firstName lastName')
+    ])
+    .then(([users, chores]) => {
+        chores.forEach(chore => {
+            chore.formattedDate = DateTime.fromJSDate(chore.date).plus({ days: 1 }).toFormat('MM/dd/yy');
+        });
+        res.render('./chore/assigned', { req, users, chores });
+    })
+    .catch(err=>next(err));
 };
