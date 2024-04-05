@@ -3,7 +3,7 @@ const Chore = require('../models/chore');
 const User = require('../models/user'); 
 
 //GET /: send home page to the user
-exports.index = (req, res) => {
+exports.index = (req, res, next) => {
     Promise.all([
         User.find(),
         Chore.find()
@@ -12,9 +12,9 @@ exports.index = (req, res) => {
     ])
     .then(([users, chores]) => {
         chores.forEach(chore => {
-            chore.formattedDate = DateTime.fromJSDate(chore.date).toFormat('MM/dd/yy');
+            chore.formattedDate = DateTime.fromJSDate(chore.date).plus({ days: 1 }).toFormat('MM/dd/yy');
         });
-        res.render('./chore/index', {req, users, chores});
+        res.render('./chore/index', { req, users, chores });
     })
     .catch(err=>next(err));
 };
@@ -43,18 +43,6 @@ exports.create = (req, res, next) => {
     });
 };
 
-//DELETE /chores/:id
-exports.delete = (req, res, next) => {
-    let id = req.params.id;
-
-    Chore.findByIdAndDelete(id, {useFindAndModify: false})
-    .then(chore => {
-        req.flash('success', 'Chore was succesfully deleted!');
-        return res.redirect('/chores');
-    })
-    .catch(err => next(err));
-};
-
 //PUT /events/:id
 exports.update = (req, res, next) => {
     let chore = req.body;
@@ -73,4 +61,16 @@ exports.update = (req, res, next) => {
         }
         // next(err);
     });
+};
+
+//DELETE /chores/:id
+exports.delete = (req, res, next) => {
+    let id = req.params.id;
+
+    Chore.findByIdAndDelete(id, {useFindAndModify: false})
+    .then(chore => {
+        req.flash('success', 'Chore was succesfully deleted!');
+        return res.redirect('/chores');
+    })
+    .catch(err => next(err));
 };
