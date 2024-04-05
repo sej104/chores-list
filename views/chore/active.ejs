@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col">
                                     <label for="date" class="form-label">Date</label>
-                                    <input type="date" id="date" name="date" class="form-select" required>
+                                    <input type="date" id="date" name="date" class="form-select" min="2024-04-01" required>
                                 </div>
                             </div>
                         </form>
@@ -135,7 +135,8 @@
                                                 </div>
                                                 <div class="col">
                                                     <label for="date" class="form-label">Date</label>
-                                                    <input type="date" id="date" name="date" class="form-select" required value="<%= formatDate(chore.date) %>">                                                </div>
+                                                    <input type="date" id="date" name="date" class="form-select" required min="2024-04-01" value="<%= formatDate(chore.date) %>">                                                
+                                                </div>
                                                 </div>
                                             </div>
                                         </form>
