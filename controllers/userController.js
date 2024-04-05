@@ -80,8 +80,10 @@ exports.delete = (req, res, next) => {
             req.flash('error', 'User not found');
             return res.redirect('/');
         }
-
-        req.flash('success', 'User was successfully deleted!');
+        return Chore.deleteMany({ $or: [{ assignTo: user.id }, { createdBy: user.id }] });
+    })
+    .then(() => {
+        req.flash('success', 'User and associated chores were successfully deleted!');
         req.session.destroy(err => {
             if (err) {
                 return next(err);
