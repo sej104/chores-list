@@ -4,9 +4,11 @@ const User = require('../models/user');
 
 //GET /: send home page to the user
 exports.index = (req, res, next) => {
+    let userId = req.session.user.id;
+
     Promise.all([
         User.find(),
-        Chore.find()
+        Chore.find({ $or: [{ createdBy: userId }, { assignTo: userId }] })
         .populate('createdBy', 'firstName lastName')
         .populate('assignTo', 'firstName lastName')
     ])
