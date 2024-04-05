@@ -29,19 +29,60 @@ exports.active = (req, res, next) => {
         User.find(),
         Chore.find({
             $or: [
-                { createdBy: userId, assignTo: null, completed: false }, // Fetch tasks created by the current user and not assigned to anyone else
-                { assignTo: userId, completed: false } // Fetch tasks assigned to the current user by someone else
+                { createdBy: userId, assignTo: null, completed: false }, 
+                { assignTo: userId, completed: false } 
             ]
         })
         .populate('createdBy', 'firstName lastName')
         .populate('assignTo', 'firstName lastName')
-
     ])
     .then(([users, chores]) => {
         chores.forEach(chore => {
             chore.formattedDate = DateTime.fromJSDate(chore.date).plus({ days: 1 }).toFormat('MM/dd/yy');
         });
         res.render('./chore/active', { req, users, chores });
+    })
+    .catch(err=>next(err));
+};
+
+//GET /: send tasks assigned to other users
+exports.assigned = (req, res, next) => {
+    let userId = req.session.user.id;
+
+    Promise.all([
+        User.find(),
+        Chore.find({
+            createdBy: userId, // Filter tasks created by the current user
+            assignTo: { $ne: null},
+            completed: false 
+        })
+        .populate('createdBy', 'firstName lastName')
+        .populate('assignTo', 'firstName lastName')
+    ])
+    .then(([users, chores]) => {
+        chores.forEach(chore => {
+            chore.formattedDate = DateTime.fromJSDate(chore.date).plus({ days: 1 }).toFormat('MM/dd/yy');
+        });
+        res.render('./chore/assigned', { req, users, chores });
+    })
+    .catch(err=>next(err));
+};
+
+//GET /: send all completed tasks to user
+exports.completed = (req, res, next) => {
+    let userId = req.session.user.id;
+
+    Promise.all([
+        User.find(),
+        Chore.find({ $or: [{ createdBy: userId }, { assignTo: userId }] })
+        .populate('createdBy', 'firstName lastName')
+        .populate('assignTo', 'firstName lastName')
+    ])
+    .then(([users, chores]) => {
+        chores.forEach(chore => {
+            chore.formattedDate = DateTime.fromJSDate(chore.date).plus({ days: 1 }).toFormat('MM/dd/yy');
+        });
+        res.render('./chore/completed', { req, users, chores });
     })
     .catch(err=>next(err));
 };
@@ -80,7 +121,7 @@ exports.update = (req, res, next) => {
     Chore.findByIdAndUpdate(id, chore, {useFindAndModify: false, runValidators: true})
     .then(chore=>{
         req.flash('success', 'Chore was updated succesfully!');
-        res.redirect('back');
+            res.redirect('back');
     })
     .catch(err=>{
         if(err.name === 'ValidationError') {
@@ -102,24 +143,4 @@ exports.delete = (req, res, next) => {
         return res.redirect('/chores');
     })
     .catch(err => next(err));
-};
-
-
-
-//GET /: send tasks assigned to other users
-exports.assigned = (req, res, next) => {
-    let userId = req.session.user.id;
-
-    Promise.all([
-        User.find(),
-        Chore.find({ assignTo: { $ne: userId } })
-        .populate('assignTo', 'firstName lastName')
-    ])
-    .then(([users, chores]) => {
-        chores.forEach(chore => {
-            chore.formattedDate = DateTime.fromJSDate(chore.date).plus({ days: 1 }).toFormat('MM/dd/yy');
-        });
-        res.render('./chore/assigned', { req, users, chores });
-    })
-    .catch(err=>next(err));
 };

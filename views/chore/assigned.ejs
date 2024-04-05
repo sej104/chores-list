@@ -96,7 +96,6 @@
                     <% } else { %>
                         <td></td>
                     <% } %>
-                    <td><i class="fas fa-user-circle profile-icon"></i><%= chore.createdBy.firstName + ' ' + chore.createdBy.lastName %></td>
                     <% if (chore.assignTo) { %>
                         <td><i class="fas fa-user-circle profile-icon"></i><%= chore.assignTo.firstName + ' ' + chore.assignTo.lastName %></td>
                     <% } else { %>
@@ -104,6 +103,7 @@
                     <% } %>
                     <td><%= chore.formattedDate%></td>
                     <td>
+                        <% if (chore.createdBy._id.toString() === user.id) { %>
                         <button type="button" onclick="showEditTaskModal('<%= chore.id %>')" class="btn btn-link py-0 px-1 edit-btn"><i class="fa-solid fa-pen-to-square edit-icon"></i></button>
                         <div id="editTask_<%= chore.id %>" class="modal" tabindex="-1">                            
                             <div class="modal-dialog modal-dialog-centered">
@@ -151,6 +151,7 @@
                                 </div>
                             </div>
                         </div>
+                        <% } %>
                         <form>
                             <button type="submit" formmethod="POST" formaction = "/chores/<%= chore.id%>?_method=DELETE" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
                         </form>
