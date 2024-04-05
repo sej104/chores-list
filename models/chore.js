@@ -8,7 +8,8 @@ const choreSchema = new Schema({
         required: [true, 'category is required'],
         enum: ['None', 'Low', 'Medium', 'High']},
     date: {type: Date, required: [true, 'date is required']},
-    createdBy: {type: Schema.Types.ObjectId, ref: 'User'}}
+    createdBy: {type: Schema.Types.ObjectId, ref: 'User'},
+    completed: { type: Boolean, default: false }}
     );
 
 module.exports = mongoose.model('Chore', choreSchema);

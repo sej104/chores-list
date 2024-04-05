@@ -21,7 +21,6 @@ exports.index = (req, res, next) => {
     .catch(err=>next(err));
 };
 
-
 //POST /chores
 exports.create = (req, res, next) => {
     if (req.body.assignTo === "") {

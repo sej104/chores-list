@@ -80,8 +80,11 @@
             <% chores.forEach(chore => { %>
                 <tr>
                     <th scope="row">
-                        <input type="checkbox" id="completeCheckBox_<%= chore._id %>">
-                        <label for="completeCheckBox_<%= chore._id %>" class="circle"></label>
+                        <form method="POST" action="/chores/<%= chore.id %>?_method=PUT">
+                            <input type="hidden" name="completed" value="<%= !chore.completed %>">
+                            <input type="checkbox" id="completeCheckBox_<%= chore.id %>" onchange="this.form.submit()" <% if (chore.completed) { %>checked<% } %>>
+                            <label for="completeCheckBox_<%= chore.id %>" class="circle"></label>
+                        </form>
                     </th>
                     <td><%= chore.title %></td>
                     <% if (chore.priority !== 'None') { %>
