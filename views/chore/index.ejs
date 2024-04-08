@@ -115,7 +115,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="POST" action="/chores/<%= chore.id%>?_method=PUT" id="editTaskForm">
+                                        <form method="POST" action="/chores/<%= chore.id%>?_method=PUT" id="editTaskForm_<%= chore.id %>">
                                             <div class="mb-3">
                                                 <label for="title" class="form-label">Task Title</label>
                                                 <input type="text" class="form-control" id="title" name="title" required value="<%= chore.title %>">
@@ -148,16 +148,18 @@
                                         </form>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-primary" form="editTaskForm" id="submitBtn">Submit</button>
+                                            <button type="submit" class="btn btn-primary" form="editTaskForm_<%= chore.id %>" id="submitBtn">Submit</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <% } %>
-                        <form>
-                            <button type="submit" formmethod="POST" formaction = "/chores/<%= chore.id%>?_method=DELETE" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
-                        </form>
+                        <div>
+                            <form>
+                                <button type="submit" formmethod="POST" formaction = "/chores/<%= chore.id%>?_method=DELETE" class="btn btn-link py-0 px-1 trash-btn"><i class="fa-solid fa-trash trash-icon"></i></button>
+                            </form>
+                        </div>                    
                     </td>
                 </tr>
             <% }); %>                        
